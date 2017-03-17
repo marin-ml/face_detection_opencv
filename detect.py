@@ -5,10 +5,12 @@ import sys
 # Get user supplied values
 if sys.argv.__len__() > 1:
     imagePath = sys.argv[1]
-
+    # imagePath = '2.jpg'
+    f_video = False
 else:
-    imagePath = '2.jpg'
-    # imagePath = 'Driver_License_Janek.jpg'
+    f_video = True
+
+cal = 1
 
 # cascade path
 cascade_face = 'haarcascade_frontalface_default.xml'
@@ -19,12 +21,15 @@ cascade_mouth = 'haarcascade_mcs_mouth.xml'
 faceCascade = cv2.CascadeClassifier(cascade_face)
 eyeCascade = cv2.CascadeClassifier(cascade_eye)
 mouthCascade = cv2.CascadeClassifier(cascade_mouth)
-cal = 1
 
-cap = cv2.VideoCapture(0)
+if f_video:
+    cap = cv2.VideoCapture(0)
 
 while True:
-    ret, image = cap.read()
+    if f_video:
+        ret, image = cap.read()
+    else:
+        image = cv2.imread(imagePath)
 
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
@@ -34,7 +39,7 @@ while True:
         scaleFactor=1.1,
         minNeighbors=5,
         minSize=(100, 100),
-        flags=cv2.cv.CV_HAAR_SCALE_IMAGE
+        flags=2
     )
 
     eyes = eyeCascade.detectMultiScale(
@@ -42,7 +47,7 @@ while True:
         scaleFactor=1.1,
         minNeighbors=5,
         minSize=(30, 30),
-        flags=cv2.cv.CV_HAAR_SCALE_IMAGE
+        flags=2
     )
 
     mouth = mouthCascade.detectMultiScale(
@@ -50,7 +55,7 @@ while True:
         scaleFactor=1.1,
         minNeighbors=5,
         minSize=(30, 30),
-        flags=cv2.cv.CV_HAAR_SCALE_IMAGE
+        flags=2
     )
 
     if cal == 1:
@@ -97,46 +102,3 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
-
-
-# # Read the image
-# image = cv2.imread(imagePath)
-# gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-#
-# # Detect faces in the image
-# faces = faceCascade.detectMultiScale(
-#     gray,
-#     scaleFactor=1.1,
-#     minNeighbors=5,
-#     minSize=(30, 30),
-#     flags=cv2.cv.CV_HAAR_SCALE_IMAGE
-# )
-#
-# eyes = eyeCascade.detectMultiScale(
-#     gray,
-#     scaleFactor=1.1,
-#     minNeighbors=5,
-#     minSize=(30, 30),
-#     flags=cv2.cv.CV_HAAR_SCALE_IMAGE
-# )
-#
-# mouth = mouthCascade.detectMultiScale(
-#     gray,
-#     scaleFactor=1.1,
-#     minNeighbors=5,
-#     minSize=(30, 30),
-#     flags=cv2.cv.CV_HAAR_SCALE_IMAGE
-# )
-#
-# # Draw a rectangle around the faces
-# for (x, y, w, h) in faces:
-#     cv2.rectangle(image, (x, y), (x+w, y+h), (255, 0, 0), 2)
-#
-# for (x, y, w, h) in eyes:
-#     cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
-#
-# for (x, y, w, h) in mouth:
-#     cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
-#
-# cv2.imshow("Faces found", image)
-# cv2.waitKey(0)
