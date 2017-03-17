@@ -1,29 +1,30 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+This is the project to detect the face, eyes, mouth from image or webcam.
 
-### What is this repository for? ###
+### Requested Library ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* Python 2.7
+* openCV 3
 
-### How do I get set up? ###
+### How can I run this script? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+This python script can bu run as two modes, one is using of image and the other one is using webcam.
 
-### Contribution guidelines ###
+* using image
 
-* Writing tests
-* Code review
-* Other guidelines
+In case of this mode, we should type the command as belows.
 
-### Who do I talk to? ###
+    pyton detect.py image_name
 
-* Repo owner or admin
-* Other community or team contact
+for example
+
+    pyton detect.py my_face.png
+
+* Using webcam
+
+If we don't set the argument in command line, this script run as webcam mode automatically.
+
+    python detect.py
+
+Thanks for you careful look.
