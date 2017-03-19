@@ -5,12 +5,13 @@ import sys
 # Get user supplied values
 if sys.argv.__len__() > 1:
     imagePath = sys.argv[1]
-    # imagePath = '2.jpg'
+    # imagePath = '1.jpg'
     f_video = False
 else:
     f_video = True
 
 cal = 1
+save_image = 1
 
 # cascade path
 cascade_face = 'haarcascade_frontalface_default.xml'
@@ -24,6 +25,9 @@ mouthCascade = cv2.CascadeClassifier(cascade_mouth)
 
 if f_video:
     cap = cv2.VideoCapture(0)
+
+t = 0
+ind = 0
 
 while True:
     if f_video:
@@ -84,15 +88,38 @@ while True:
         eye_data = eyes
         mouth_data = mouth
 
-    # Draw a rectangle around the faces
-    for (x, y, w, h) in face_data:
-        cv2.rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 2)
+    # Save the individual parts
+    if save_image == 1:
+        t += 1
+        eye = 0
+        if t % 20 == 0:
+            ind += 1
+            print "save"
+            for (x, y, w, h) in eye_data:
+                img_eye = image[y:y + h, x:x + w]
+                if eye == 0:
+                    cv2.imwrite('eye1_' + ind.__str__() + '.bmp', img_eye)
+                    eye = 1
+                else:
+                    cv2.imwrite('eye2_' + ind.__str__() + '.bmp', img_eye)
 
+            for (x, y, w, h) in mouth_data:
+                img_mouth = image[y:y + h, x:x + w]
+                cv2.imwrite('mouth_' + ind.__str__() + '.bmp', img_mouth)
+
+            for (x, y, w, h) in face_data:
+                img_face = image[y:y + h, x:x + w]
+                cv2.imwrite('face_' + ind.__str__() + '.bmp', img_face)
+
+    # Draw a rectangle around the faces
     for (x, y, w, h) in eye_data:
-        cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
+        cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
     for (x, y, w, h) in mouth_data:
         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
+
+    for (x, y, w, h) in face_data:
+        cv2.rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
     cv2.imshow("Faces found", image)
 
