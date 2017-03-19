@@ -1,6 +1,6 @@
 # README #
 
-This is the project to detect the face, eyes, mouth from image or webcam.
+This is the project to detect and save the face, eyes, mouth from image or webcam.
 
 ### Requested Library ###
 
@@ -28,3 +28,17 @@ If we don't set the argument in command line, this script run as webcam mode aut
     python detect.py
 
 Thanks for you careful look.
+
+* Note
+
+    This script has two main parameter inside.
+
+    - cal
+
+        0: detect and display without calibration.
+        1: detect and display with calibration.
+
+    - save_image
+
+        0: Don't save image.
+        1: Save image.
