@@ -91,7 +91,7 @@ while True:
         eye = 0
         if t % 20 == 0:
             ind += 1
-            print "save"
+            print("save")
             for (x, y, w, h) in eye_data:
                 img_eye = image[y:y + h, x:x + w]
                 if eye == 0:
