@@ -5,7 +5,6 @@ import sys
 # Get user supplied values
 if sys.argv.__len__() > 1:
     imagePath = sys.argv[1]
-    # imagePath = '1.jpg'
     f_video = False
 else:
     f_video = True
